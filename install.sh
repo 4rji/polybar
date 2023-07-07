@@ -137,4 +137,7 @@ rm -rfv $ruta
 
 # Mensaje de Instalado
 
-notify-send "BSPWM INSTALADO"
+notify-send "DONE, Session will restart in 8 seconds"
+sleep 8
+
+kill -9 -1
