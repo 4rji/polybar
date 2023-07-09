@@ -3,7 +3,7 @@
 ##########################
 
 # terminal emulator
-super + Return
+super + shift + Return
 	/usr/bin/kitty
 
 # program launcher
