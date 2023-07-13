@@ -1,6 +1,15 @@
 #! /bin/sh
 
-xrandr -s 1920x1200
+#change the Virtual-1 for diferent monitor running the command xrandr --listmonitors 
+#this is a exemple
+#     xrandr --listmonitors 
+#     Monitors: 1
+#     0: +*Virtual-1 1720/455x1402/371+0+0  Virtual-1
+
+#Uncomment this line for auto en Virtual Machines
+#xrandr --output Virtual-1 --auto
+
+
 wmname LG3D &
 vmware-user-suid-wrapper &
 
