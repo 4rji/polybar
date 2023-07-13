@@ -137,7 +137,7 @@ rm -rfv $ruta
 
 # Mensaje de Instalado
 
-notify-send "DONE, Session will restart in 8 seconds"
-sleep 8
+notify-send "DONE, Session will restart in 4 seconds"
+sleep 4
 
 kill -9 -1
