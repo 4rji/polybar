@@ -135,7 +135,7 @@ function fzf-lovely(){
 	fi
 }
 
-function rmk(){
+function adio(){
 	scrub -p dod $1
 	shred -zun 10 -v $1
 }
@@ -149,3 +149,6 @@ bindkey "^[[3~" delete-char
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 source ~/.powerlevel10k/powerlevel10k.zsh-theme
+
+alias mkdirr='function _mkdirr(){ mkdir "$1" && cd "$1" };_mkdirr'
+
