@@ -35,7 +35,7 @@ bspc rule -a Screenkey manage=off
 
 
 # WALLPAPER
-feh --bg-fill ~/Wallpaper/4rji.png
+feh --bg-fill ~/.config/Wallpaper/4rji.png
 
 # POLYBAR
 ~/.config/polybar/launch.sh
