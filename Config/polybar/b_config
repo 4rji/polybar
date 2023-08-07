@@ -295,8 +295,6 @@ ramp-headphones-foreground = #666
 
 [module/battery]
 type = internal/battery
-battery = BAT0
-adapter = AC
 full-at = 98
 time-format = %H:%M
 
