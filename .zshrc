@@ -87,6 +87,7 @@ function extractPorts(){
 	cat extractPorts.tmp; rm extractPorts.tmp
 }
 
+
 # Settarget
 
 function settarget(){
@@ -134,6 +135,18 @@ function fzf-lovely(){
 	                          cat {}) 2> /dev/null | head -500'
 	fi
 }
+lfcd () {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+    fi
+}
+
+
+
 
 function adio(){
 	scrub -p dod $1
