@@ -11,6 +11,12 @@
 # for dell xps xrandr -s 1680x1050
 
 
+#arregla en virtual-1 y forza la resolucion 3440 para pantallas largas, ejecutar los 3 comandos
+#xrandr --newmode "3440x1440_60.00"  419.00  3440 3696 4064 4688  1440 1443 1453 1493 -hsync +vsync
+#xrandr --addmode Virtual-1 3440x1440_60.00
+#xrandr --output Virtual-1 --mode 3440x1440_60.00
+
+
 wmname LG3D &
 vmware-user-suid-wrapper &
 
