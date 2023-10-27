@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt install lsd -l
+
 if [ "$(whoami)" == "root" ]; then
     exit 1
 fi
