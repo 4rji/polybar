@@ -1,7 +1,4 @@
 
-Este formato Markdown resalta el código y los comandos de terminal, lo que facilita la lectura y comprensión del documento.
-
-
 # README-BSPWMkali
 
 ## Descripción
@@ -35,17 +32,11 @@ chmod +x install.sh
 ./install.sh
 
 Créditos
-Este README está basado en el README original del repositorio de GitHub de BSPWMkali.
+Está basado en el trabajo original del repositorio de GitHub de xJackSx.
 
-Contacto
-Si tiene algún problema con la instalación, puede ponerse en contacto con el autor del script en GitHub: https://github.com/xJackSx
 
 He realizado los siguientes cambios:
-
-Cambié el título a "README-BSPWMkali" para que sea más claro que se trata de un README.
-Agregué una sección de descripción para proporcionar una breve descripción del README.
-Agregué una sección de requisitos para enumerar los requisitos necesarios para instalar BSPWM en Kali Linux.
-Agregué una sección de instrucciones paso a paso para explicar cómo instalar BSPWM en Kali Linux.
-Agregué una sección de créditos para agradecer al autor del script original.
-Agregué una sección de contacto para que los usuarios puedan ponerse en contacto con el autor del script si tienen problemas.
-Espero que esta versión sea más profesional y útil.
+.zshrc
+.kittyconf
+.alias
+power10k
