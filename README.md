@@ -31,7 +31,8 @@ chmod +x install.sh
 
 ./install.sh
 
-Créditos
+## Créditos
+
 Está basado en el trabajo original del repositorio de GitHub de xJackSx.
 
 
@@ -40,3 +41,4 @@ He realizado los siguientes cambios:
 .kittyconf
 .alias
 power10k
+wallpaper
