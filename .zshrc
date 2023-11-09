@@ -72,8 +72,8 @@ source /usr/share/zsh-sudo/sudo.plugin.zsh
 
 # Functions
 function mkt(){
-	mkdir {nmap,content,exploits,scripts}
-}
+    mkdir "$1" && cd "$1" && mkdir nmap && mkdir content && mkdir exploits && mkdir scripts && echo 'nuevo directorio' && pwd && ls
+}}
 
 
 
