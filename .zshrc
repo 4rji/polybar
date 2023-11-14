@@ -1,3 +1,5 @@
+pgg
+neofetch
 # Fix the Java Problem
 export _JAVA_AWT_WM_NONREPARENTING=1
 
