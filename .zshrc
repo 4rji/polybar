@@ -79,6 +79,15 @@ function mkt(){
     mkdir "$1" && cd "$1" && mkdir nmap && mkdir content && mkdir exploits && mkdir scripts && echo 'nuevo directorio' && pwd && ls
 }
 
+function mktem() {
+    new_dir=$(mktemp -d)
+    echo "Directorio creado en: $new_dir"
+    cd "$new_dir" || return
+    echo "Cambiado al directorio: $PWD"
+}
+
+
+
 # Extract nmap information
 function extractPorts(){
 	ports="$(cat $1 | grep -oP '\d{1,5}/open' | awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
