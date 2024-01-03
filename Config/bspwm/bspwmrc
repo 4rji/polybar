@@ -1,5 +1,8 @@
 #! /bin/sh
 
+# for dell xps 
+# xrandr -s 1920x1080
+
 #Uncomment this line for auto en Virtual Machines
 #xrandr --output Virtual-1 --auto
 
@@ -8,9 +11,9 @@
 #     xrandr --listmonitors 
 #     Monitors: 1
 #     0: +*Virtual-1 1720/455x1402/371+0+0  Virtual-1
-# for dell xps 
-#xps 
-xrandr -s 1680x1050
+
+#otro
+#xrandr -s 1680x1050
 #half_of_ 3440 monitor xrandr -s 1720x1377 
 
 
