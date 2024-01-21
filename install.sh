@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt install lsd -l
-
 if [ "$(whoami)" == "root" ]; then
     exit 1
 fi
@@ -64,6 +62,8 @@ sudo git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /root/.pow
 
 mkdir -p ~/.config/rofi/themes
 cp $ruta/rofi/nord.rasi ~/.config/rofi/themes/
+cp $ruta/rofi/rounded-common.rasi ~/.config/rofi/themes/
+cp $ruta/rofi/rounded-purple-dark.rasi ~/.config/rofi/themes/
 
 # Instando lsd
 
@@ -105,6 +105,9 @@ sudo cp -v $ruta/.p10k.zsh-root /root/.p10k.zsh
 
 sudo cp -v $ruta/scripts/whichSystem.py /usr/local/bin/
 sudo cp -v $ruta/scripts/screenshot /usr/local/bin/
+
+# Instalamos Net-tools
+sudo apt install net-tools
 
 # Plugins ZSH
 

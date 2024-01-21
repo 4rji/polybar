@@ -1,44 +1,50 @@
+![Alt text](image.png)
+![Alt text](image-1.png)
+![Alt text](image-2.png)
 
-# README-BSPWMkali
+# Uso del Script
 
-## Descripción
+1.- Uso del Script
 
-Este README proporciona instrucciones sobre cómo instalar BSPWM en Kali Linux.
-
-## Requisitos
-
-* Kali Linux 2023.1 o posterior
-* Una conexión a Internet
-
-## Instalación
-
-1. Clone el repositorio de GitHub:
-
-git clone https://github.com/xJackSx/BSPWMkali.git
-
-
-2. Cambie al directorio del repositorio:
-
+```bash
+git clone https://github.com/defxsec/BSPWMkali.git
 cd BSPWMkali
-
-
-3. Otorgué permisos de ejecución al script de instalación:
-
 chmod +x install.sh
-
-
-4. Ejecute el script de instalación:
-
 ./install.sh
+```
 
-## Créditos
+# Para la selección de Rofi
 
-Está basado en el trabajo original del repositorio de GitHub de xJackSx.
+```bash
+rofi-theme-selector
+```
 
+<p align="center">
+    <img src="https://github.com/defxsec/BSPWMkali/blob/master/image-3.png" alt="" width="700px" height="250px">
+</p>
 
-He realizado los siguientes cambios:
-.zshrc
-.kittyconf
-.alias
-power10k
-wallpaper
+```bash
+rounded-purple-dark
+Alt-a
+```
+
+Este Script esta diseñado solo para funcionar en Kali Linux
+
+# Shortcuts
+
+```bash
+===========================================================================================================
+windows + enter abre terminal
+windows + w cierra terminal
+windows + d abre el buscador de aplicaciones
+windows hold mover libremente la ventana
+windows clic derecho reescalar libremente la ventana
+windows + alt + flechas escalar ventana
+windows + ctl + flechas mover ventana
+control + shift + t abre pestaña en terminal
+control shift alt t renombrar pestaña de terminal
+control shift w cerrar pestaña de terminal
+windows + "1,2,3,4,5,6,7,8,9,0" cambiar de escritorio
+windows + shift + "1,2,3,4,5,6,7,8,9,0" cambiar de escritorio la ventana actual al escritorio seleccionado
+============================================================================================================
+```

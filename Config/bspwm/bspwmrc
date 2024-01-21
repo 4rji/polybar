@@ -1,28 +1,5 @@
 #! /bin/sh
 
-# for dell xps 
-# xrandr -s 1920x1080
-
-#Uncomment this line for auto en Virtual Machines
-#xrandr --output Virtual-1 --auto
-
-#change the Virtual-1 for diferent monitor running the command xrandr --listmonitors 
-#this is a exemple
-#     xrandr --listmonitors 
-#     Monitors: 1
-#     0: +*Virtual-1 1720/455x1402/371+0+0  Virtual-1
-
-#otro
-#xrandr -s 1680x1050
-#half_of_ 3440 monitor xrandr -s 1720x1377 
-
-
-#arregla en virtual-1 y forza la resolucion 3440 para pantallas largas, ejecutar los 3 comandos
-#xrandr --newmode "3440x1440_60.00"  419.00  3440 3696 4064 4688  1440 1443 1453 1493 -hsync +vsync
-#xrandr --addmode Virtual-1 3440x1440_60.00
-#xrandr --output Virtual-1 --mode 3440x1440_60.00
-
-
 wmname LG3D &
 vmware-user-suid-wrapper &
 
@@ -47,7 +24,7 @@ bspc rule -a Screenkey manage=off
 
 
 # WALLPAPER
-feh --bg-fill ~/.config/Wallpaper/4rji.png
+feh --bg-fill ~/Wallpaper/Fondo.jpg
 
 # POLYBAR
 ~/.config/polybar/launch.sh
@@ -57,6 +34,10 @@ bspc config focus_follows_pointer true
 
 # PICOM
 picom &
-bspc config border_width 0
+bspc config border_width 2
+
+bspc config active_border_color '#a486dd'
+bspc config normal_border_color '#fe8019'
+bspc config focused_border_color '#a486dd'
 
 xsetroot -cursor_name left_ptr &
