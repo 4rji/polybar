@@ -1,0 +1,12 @@
+workspace.ini 
+Aqui puedo ajustar la barra de enmedio:
+
+width = 16%
+
+and 
+offset-x = 40%
+
+
+###
+current.ini se controla las otras barras:
+
