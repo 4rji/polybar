@@ -124,6 +124,20 @@ function man() {
     man "$@"
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # fzf improvement
 function fzf-lovely(){
 
@@ -151,6 +165,45 @@ function rmk(){
 	scrub -p dod $1
 	shred -zun 10 -v $1
 }
+
+
+
+iniciar () {
+  local base_dir="/home/ass/Documents/GitHub/4rji/4rjinotes/htb"
+  local new_dir="$base_dir/$1"
+  local template_file="/home/ass/.template.md"
+  local machine_name="$1"
+  local new_file="$new_dir/$machine_name.md"
+
+  # Crear directorio y copiar plantilla
+  mkdir -p "$new_dir" && cd "$new_dir" && mkdir -p nmap content exploits scripts && cp "$template_file" "$machine_name.md"
+
+  # Mostrar información y variables
+  echo "Definir las siguientes variables"
+  echo ""
+  echo ""
+  echo "export htf=$new_file"
+  nombre_maquina=$1
+  echo "export htcon=$new_dir"
+  echo "export ip="
+
+  # Iniciar sesión tmux con la configuración deseada
+  tmux new-session -s "$1" -c "cd \"$new_dir\"" -d
+  tmux rename-window -t "$1" 0 "Principal"
+  tmux split-window -t "$1" -h -c "cd \"$new_dir/nmap\""
+  tmux select-pane -t "$1" 1
+  tmux split-window -t "$1" -v -c "cd \"$new_dir/content\""
+  tmux select-pane -t "$1" 2
+  tmux attach -t "$1"
+
+  # Cambiar al directorio "nmap"
+  #cd "nmap"
+
+  # Mostrar mensaje final
+  echo ""
+  pwd
+}
+
 
 # Finalize Powerlevel10k instant prompt. Should stay at the bottom of ~/.zshrc.
 (( ! ${+functions[p10k-instant-prompt-finalize]} )) || p10k-instant-prompt-finalize 
