@@ -77,12 +77,20 @@ function mkt(){
     mkdir "$1" && cd "$1" && mkdir nmap && mkdir content && mkdir exploits && mkdir scripts && echo 'nuevo directorio' && pwd && ls
 }
 
+
+# Con la funcion de que se puede poner un nombre despues del mktem para especificar el nombre del folder.
 function mktem() {
-    new_dir=$(mktemp -d)
+    if [ -n "$1" ]; then
+        new_dir=$(mktemp -d /dev/shm/tmp."$1".XXXXXX)
+    else
+        new_dir=$(mktemp -d /dev/shm/tmp.XXXXXX)
+    fi
+    
     echo "Directorio creado en: $new_dir"
     cd "$new_dir" || return
     echo "Cambiado al directorio: $PWD"
 }
+
 
 
 
