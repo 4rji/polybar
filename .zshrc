@@ -64,6 +64,8 @@ alias cat='/bin/batcat --paging=never'
 alias catn='cat'
 alias catnl='batcat'
 
+#source the fzf and another way:       
+#source <(fzf --zsh)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Plugins
@@ -91,6 +93,18 @@ function mktem() {
     echo "Cambiado al directorio: $PWD"
 }
 
+
+function mktemm() {
+    if [ -n "$1" ]; then
+        new_dir=$(mktemp -d /tmp/tmp."$1".XXXXXX)
+    else
+        new_dir=$(mktemp -d /tmp/tmp.XXXXXX)
+    fi
+    
+    echo "Directorio creado en: $new_dir"
+    cd "$new_dir" || return
+    echo "Cambiado al directorio: $PWD"
+}
 
 
 
@@ -225,3 +239,36 @@ source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
 #para la fzf
 eval "$(fzf --zsh)"
+
+    
+
+# --- setup fzf theme ---
+fg="#CBE0F0"
+bg="#011628"
+bg_highlight="#143652"
+purple="#B388FF"
+blue="#06BCE4"
+cyan="#2CF9ED"
+    
+export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},prompt:${cyan},pointer$
+    
+
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
+#para mac solo . no encontre en linux eza
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+
+    
+# Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+    export|unset) fzf --preview "eval 'echo $'{}"         "$@" ;;
+    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    *)            fzf --preview "bat -n --color=always --line-range :500 {}" "$@" ;;
+  esac
+}
