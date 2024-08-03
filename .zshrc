@@ -52,7 +52,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # Manual configuration
 
 PATH=/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
-
+PATH=$PATH:/opt/4rji/bin
 # Custom Aliases
 
 alias ll='lsd -lh --group-dirs=first'
@@ -64,9 +64,6 @@ alias cat='/bin/batcat --paging=never'
 alias catn='cat'
 alias catnl='batcat'
 
-#source the fzf and another way:       
-#source <(fzf --zsh)
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Plugins
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -152,14 +149,6 @@ function man() {
 
 
 
-
-
-
-
-
-
-
-
 # fzf improvement
 function fzf-lovely(){
 
@@ -189,42 +178,110 @@ function rmk(){
 }
 
 
-
-iniciar () {
-  local base_dir="/home/ass/Documents/GitHub/4rji/4rjinotes/htb"
-  local new_dir="$base_dir/$1"
-  local template_file="/home/ass/.template.md"
-  local machine_name="$1"
-  local new_file="$new_dir/$machine_name.md"
-
-  # Crear directorio y copiar plantilla
-  mkdir -p "$new_dir" && cd "$new_dir" && mkdir -p nmap content exploits scripts && cp "$template_file" "$machine_name.md"
-
-  # Mostrar información y variables
-  echo "Definir las siguientes variables"
-  echo ""
-  echo ""
-  echo "export htf=$new_file"
-  nombre_maquina=$1
-  echo "export htcon=$new_dir"
-  echo "export ip="
-
-  # Iniciar sesión tmux con la configuración deseada
-  tmux new-session -s "$1" -c "cd \"$new_dir\"" -d
-  tmux rename-window -t "$1" 0 "Principal"
-  tmux split-window -t "$1" -h -c "cd \"$new_dir/nmap\""
-  tmux select-pane -t "$1" 1
-  tmux split-window -t "$1" -v -c "cd \"$new_dir/content\""
-  tmux select-pane -t "$1" 2
-  tmux attach -t "$1"
-
-  # Cambiar al directorio "nmap"
-  #cd "nmap"
-
-  # Mostrar mensaje final
-  echo ""
-  pwd
+function mktem() {
+    if [ -n "$1" ]; then
+        new_dir=$(mktemp -d /dev/shm/tmp."$1".XXXXXX)
+    else
+        new_dir=$(mktemp -d /dev/shm/tmp.XXXXXX)
+    fi
+    echo "Directorio creado en: $new_dir"
+    cd "$new_dir" || return
+    echo "Cambiado al directorio: $PWD"
 }
+
+function mktemm() {
+    if [ -n "$1" ]; then
+        new_dir=$(mktemp -d /tmp/tmp."$1".XXXXXX)
+    else
+        new_dir=$(mktemp -d /tmp/tmp.XXXXXX)
+    fi
+    echo "Directorio creado en: $new_dir"
+    cd "$new_dir" || return
+    echo "Cambiado al directorio: $PWD"
+}
+
+function __fzf_history_search() {
+  local selected
+  selected=$(fc -rl 1 | fzf --tac +s --tiebreak=index --toggle-sort=ctrl-r | awk '{$1=""; sub("  ", ""); print}')
+  if [[ -n $selected ]]; then
+    LBUFFER="$selected"
+    RBUFFER=""
+  fi
+  zle reset-prompt
+}
+
+zle -N __fzf_history_search
+bindkey '^R' __fzf_history_search
+
+function fzf-lovely(){
+    if [ "$1" = "h" ]; then
+        fzf -m --reverse --preview-window down:20 --preview '[[ $(file --mime {}) =~ binary ]] &&
+                echo {} is a binary file ||
+                (bat --style=numbers --color=always {} ||
+                 highlight -O ansi -l {} ||
+                 coderay {} ||
+                 rougify {} ||
+                 cat {}) 2> /dev/null | head -500'
+    else
+        fzf -m --preview '[[ $(file --mime {}) =~ binary ]] &&
+                echo {} is a binary file ||
+                (bat --style=numbers --color=always {} ||
+                 highlight -O ansi -l {} ||
+                 coderay {} ||
+                 rougify {} ||
+                 cat {}) 2> /dev/null | head -500'
+    fi
+}
+
+function goo() {
+    google-chrome-stable "$1" & disown
+}
+
+function sshproxy() {
+    ssh -D 1080 -C -q -N "$@" &
+}
+
+function T() {
+    local temp_file=$(mktemp)
+    "$@" | tee "$temp_file" | batcat -l rb
+}
+
+
+
+function htp() {
+  pwd=$(pwd)
+  foldername=$(basename "$pwd")
+  foldername_with_extension="$foldername.md"
+  resultado=$("$HOME/.config/bin/bateria.sh")
+  ip=$(echo "$resultado" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b")
+  echo "Definiendo las siguientes variables:"
+  echo "export htf=\"$pwd/$foldername_with_extension\""
+  echo "export htcon=\"$pwd\""
+  echo "export ip=\"$ip\""
+}
+
+function rmk(){
+        scrub -p dod $1
+        shred -zun 10 -v $1
+}
+
+
+
+function coll() {
+    # Obtener el último comando del historial excluyendo números de línea y espacios iniciales
+    local cmd=$(fc -ln -1 | sed 's/^[[:space:]]*//')
+
+    # Crear un archivo temporal para guardar el comando
+    local temp_file=$(mktemp)
+
+    # Escribir el comando en el archivo temporal
+    echo $cmd > "$temp_file"
+
+    # Ejecutar el comando y usar 'tee' para duplicar la salida y 'batcat' para visualizarla
+    eval $cmd | tee "$temp_file" | batcat -l rb
+}
+
+
 
 
 # Finalize Powerlevel10k instant prompt. Should stay at the bottom of ~/.zshrc.
@@ -237,8 +294,6 @@ bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
-#para la fzf
-eval "$(fzf --zsh)"
 
     
 
