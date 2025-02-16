@@ -55,80 +55,13 @@ PATH=/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/
 PATH=$PATH:/opt/4rji/bin
 # Custom Aliases
 
-alias ll='lsd -lh --group-dirs=first'
-alias la='lsd -a --group-dirs=first'
-alias l='lsd --group-dirs=first'
-alias lla='lsd -lha --group-dirs=first'
-alias ls='lsd --group-dirs=first'
-alias cat='/bin/batcat --paging=never'
-alias catn='cat'
-alias catnl='batcat'
-
-
 # Plugins
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#source /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh-sudo/sudo.plugin.zsh
 
-# Functions
-function mkt(){
-    mkdir "$1" && cd "$1" && mkdir nmap && mkdir content && mkdir exploits && mkdir scripts && echo 'nuevo directorio' && pwd && ls
-}
 
-
-# Con la funcion de que se puede poner un nombre despues del mktem para especificar el nombre del folder.
-function mktem() {
-    if [ -n "$1" ]; then
-        new_dir=$(mktemp -d /dev/shm/tmp."$1".XXXXXX)
-    else
-        new_dir=$(mktemp -d /dev/shm/tmp.XXXXXX)
-    fi
-    
-    echo "Directorio creado en: $new_dir"
-    cd "$new_dir" || return
-    echo "Cambiado al directorio: $PWD"
-}
-
-
-function mktemm() {
-    if [ -n "$1" ]; then
-        new_dir=$(mktemp -d /tmp/tmp."$1".XXXXXX)
-    else
-        new_dir=$(mktemp -d /tmp/tmp.XXXXXX)
-    fi
-    
-    echo "Directorio creado en: $new_dir"
-    cd "$new_dir" || return
-    echo "Cambiado al directorio: $PWD"
-}
-
-
-
-# Extract nmap information
-function extractPorts(){
-	ports="$(cat $1 | grep -oP '\d{1,5}/open' | awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
-	ip_address="$(cat $1 | grep -oP '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}' | sort -u | head -n 1)"
-	echo -e "\n[*] Extracting information...\n" > extractPorts.tmp
-	echo -e "\t[*] IP Address: $ip_address"  >> extractPorts.tmp
-	echo -e "\t[*] Open ports: $ports\n"  >> extractPorts.tmp
-	echo $ports | tr -d '\n' | xclip -sel clip
-	echo -e "[*] Ports copied to clipboard\n"  >> extractPorts.tmp
-	cat extractPorts.tmp; rm extractPorts.tmp
-}
-
-
-# Settarget
-
-function settarget(){
-	if [ $# -eq 1 ]; then
-	echo $1 > ~/.config/bin/target
-	elif [ $# -gt 2 ]; then
-	echo "settarget [IP] [NAME] | settarget [IP]"
-	else
-	echo $1 $2 > ~/.config/bin/target
-	fi
-}
 
 # Set 'man' colors
 function man() {
@@ -142,9 +75,6 @@ function man() {
     LESS_TERMCAP_us=$'\e[01;32m' \
     man "$@"
 }
-
-
-
 
 
 
@@ -170,34 +100,6 @@ function fzf-lovely(){
 	                          rougify {} ||
 	                          cat {}) 2> /dev/null | head -500'
 	fi
-}
-
-function rmk(){
-	scrub -p dod $1
-	shred -zun 10 -v $1
-}
-
-
-function mktem() {
-    if [ -n "$1" ]; then
-        new_dir=$(mktemp -d /dev/shm/tmp."$1".XXXXXX)
-    else
-        new_dir=$(mktemp -d /dev/shm/tmp.XXXXXX)
-    fi
-    echo "Directorio creado en: $new_dir"
-    cd "$new_dir" || return
-    echo "Cambiado al directorio: $PWD"
-}
-
-function mktemm() {
-    if [ -n "$1" ]; then
-        new_dir=$(mktemp -d /tmp/tmp."$1".XXXXXX)
-    else
-        new_dir=$(mktemp -d /tmp/tmp.XXXXXX)
-    fi
-    echo "Directorio creado en: $new_dir"
-    cd "$new_dir" || return
-    echo "Cambiado al directorio: $PWD"
 }
 
 function __fzf_history_search() {
@@ -233,53 +135,12 @@ function fzf-lovely(){
     fi
 }
 
-function goo() {
-    google-chrome-stable "$1" & disown
-}
-
-function sshproxy() {
-    ssh -D 1080 -C -q -N "$@" &
-}
-
-function T() {
-    local temp_file=$(mktemp)
-    "$@" | tee "$temp_file" | batcat -l rb
-}
-
-
-
-function htp() {
-  pwd=$(pwd)
-  foldername=$(basename "$pwd")
-  foldername_with_extension="$foldername.md"
-  resultado=$("$HOME/.config/bin/bateria.sh")
-  ip=$(echo "$resultado" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b")
-  echo "Definiendo las siguientes variables:"
-  echo "export htf=\"$pwd/$foldername_with_extension\""
-  echo "export htcon=\"$pwd\""
-  echo "export ip=\"$ip\""
-}
-
 function rmk(){
         scrub -p dod $1
         shred -zun 10 -v $1
 }
 
 
-
-function coll() {
-    # Obtener el último comando del historial excluyendo números de línea y espacios iniciales
-    local cmd=$(fc -ln -1 | sed 's/^[[:space:]]*//')
-
-    # Crear un archivo temporal para guardar el comando
-    local temp_file=$(mktemp)
-
-    # Escribir el comando en el archivo temporal
-    echo $cmd > "$temp_file"
-
-    # Ejecutar el comando y usar 'tee' para duplicar la salida y 'batcat' para visualizarla
-    eval $cmd | tee "$temp_file" | batcat -l rb
-}
 
 
 
@@ -305,8 +166,18 @@ purple="#B388FF"
 blue="#06BCE4"
 cyan="#2CF9ED"
     
-
-export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},prompt:${cyan},pointer:${pointer}"
+#old
+#export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},prompt:${cyan},pointer:${pointer}"
+export FZF_DEFAULT_OPTS="
+  --height 40% 
+  --border 
+  --preview-window=right:50% 
+  --reverse 
+  --info=inline 
+  --prompt='> ' 
+  --pointer='▶' 
+  --marker='✔' 
+  --color=fg:#CBE0F0,bg:#011628,hl:#B388FF,fg+:#CBE0F0,bg+:#143652,hl+:#B388FF,info:#06BCE4,prompt:#2CF9ED,pointer:#FF0055"
     
 
 export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
